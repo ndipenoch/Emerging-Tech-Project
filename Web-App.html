@@ -5,6 +5,27 @@
        </body>
 	
     <script type="text/javascript">
+	
+	  function init() {
+	    //Variables
+        canvas = document.getElementById('can');
+        ctx = canvas.getContext("2d");
+        w = canvas.width;
+        h = canvas.height;
+    
+        canvas.addEventListener("mousemove", function (e) {
+            findxy('move', e)
+        });
+        canvas.addEventListener("mousedown", function (e) {
+            findxy('down', e)
+        });
+        canvas.addEventListener("mouseup", function (e) {
+            findxy('up', e)
+        });
+        canvas.addEventListener("mouseout", function (e) {
+            findxy('out', e)
+        });
+    }
     
     </script>
   
