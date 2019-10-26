@@ -2,6 +2,7 @@
         <body onload="init()">
 	        <p style="position:absolute;top:2%;left:10%;">Mark Ndipenoch</p>
             <canvas id="can" width="400" height="400" style="position:absolute;top:10%;left:10%;border:2px solid;"></canvas>
+			 <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:15%;left:45%;width:60px;height:40px;">
        </body>
 	
     <script type="text/javascript">
@@ -89,6 +90,13 @@
         ctx.closePath();
     }
     
+	    function erase() {
+        var m = confirm("Clear canvas");
+        if (m) {
+            ctx.clearRect(0, 0, w, h);
+        }
+    }
+
     </script>
   
     </html>
