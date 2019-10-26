@@ -12,6 +12,8 @@
         currY = 0,
         draw_circle = false;
 
+      var x = "black",
+        y = 4;
 	
 	  function init() {
 	    //Variables
@@ -68,7 +70,23 @@
 				//Get the current position of the mouse X and Y coordinates relatively to the canvas
 			   //The windows X and Y coordinates minus the canvas offset values.
                 currX = e.clientX - canvas.offsetLeft;
+                currY = e.clientY - canvas.offsetTop;
+                draw();
         }
+    }
+	
+	function draw() {
+	    //start a new path.
+        ctx.beginPath();
+		//Draw a line from previous to current point.
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(currX, currY);
+		//Line colour
+        ctx.strokeStyle = x;
+		//line tickness
+        ctx.lineWidth = y;
+        ctx.stroke();
+        ctx.closePath();
     }
     
     </script>
