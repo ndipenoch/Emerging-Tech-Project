@@ -5,6 +5,13 @@
        </body>
 	
     <script type="text/javascript">
+	  var canvas, ctx, dragging = false,
+        prevX = 0,
+        currX = 0,
+        prevY = 0,
+        currY = 0,
+        draw_circle = false;
+
 	
 	  function init() {
 	    //Variables
@@ -25,6 +32,43 @@
         canvas.addEventListener("mouseout", function (e) {
             findxy('out', e)
         });
+    }
+	
+	
+	//Draw a circle and fill it as soon as the mouse is click on the canvas.
+	//start point
+    function findxy(mouseMovement, e) {
+        if (mouseMovement == 'down') {
+		    //Get the current coordinates of X and Y.
+            prevX = currX;
+            prevY = currY;
+			//Get the current position of the mouse X and Y coordinates relatively to the canvas
+			//The windows X and Y coordinates minus the canvas offset values.
+            currX = e.clientX - canvas.offsetLeft;
+            currY = e.clientY - canvas.offsetTop;
+    
+	        //Draw a circle of radius 2 and at an angle of 360(Math.PI*2) degrees
+			//context.arc(X,Y,radius,Math.PI*2);
+            dragging = true;
+            draw_circle = true;
+            if (draw_circle) {
+                ctx.beginPath();
+                ctx.fillStyle = x;
+                ctx.fillRect(currX, currY, 2, 2);
+                ctx.closePath();
+                draw_circle = false;
+            }
+        }
+        if (mouseMovement == 'up' || mouseMovement == "out") {
+            dragging = false;
+        }
+        if (mouseMovement == 'move' && dragging==true) {
+                prevX = currX;
+                prevY = currY;
+				//Get the current position of the mouse X and Y coordinates relatively to the canvas
+			   //The windows X and Y coordinates minus the canvas offset values.
+                currX = e.clientX - canvas.offsetLeft;
+        }
     }
     
     </script>
