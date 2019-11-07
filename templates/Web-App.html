@@ -1,8 +1,11 @@
 <html>
+    <!-- Adapted from https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse -->
+	
         <body onload="init()">
 	        <p style="position:absolute;top:2%;left:10%;">Mark Ndipenoch</p>
             <canvas id="can" width="400" height="400" style="position:absolute;top:10%;left:10%;border:2px solid;"></canvas>
-			 <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:15%;left:45%;width:60px;height:40px;">
+			 <input type="button" value="Clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:15%;left:45%;width:60px;height:40px;">
+			  <input type="button" value="Process" id="clr" size="23" onclick="getData()" style="position:absolute;top:40%;left:45%;width:60px;height:40px;">
        </body>
 	
     <script type="text/javascript">
@@ -88,7 +91,14 @@
         ctx.lineWidth = y;
         ctx.stroke();
         ctx.closePath();
+		
     }
+	
+		function getData() {
+	   
+		var imgData = ctx.getImageData(0, 0, 400, 400);
+		console.log(imgData);
+       }
     
 	    function erase() {
         var m = confirm("Clear canvas");
