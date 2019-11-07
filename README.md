@@ -1,7 +1,7 @@
 # Emerging-Tech-Project
 Emerging technologies project.
 
-I done reseach and watched these videos:
+I done research and watched these videos:
 
 # MNIST
 https://www.youtube.com/watch?v=7aK7tVdcVbY
