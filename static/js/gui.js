@@ -121,3 +121,16 @@ function draw() {
 		ctx.stroke();
 	}
 }
+
+//------------------------
+// clear button function
+//------------------------
+$("#clear-button").click(async function () {
+	//clear the canvas, result text and result box
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    clickX = new Array();
+    clickY = new Array();
+    clickD = new Array();
+    $(".prediction-text").empty();
+    $("#result_box").addClass('d-none');
+});
