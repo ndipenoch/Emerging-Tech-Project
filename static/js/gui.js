@@ -52,3 +52,40 @@ $("#canvas").mousedown(function(e) {
     onClick(currX, currY);
     draw();
 });
+
+//---------------------
+// move function
+//---------------------
+$("#canvas").mousemove(function(e) {
+    if(movingMouse) {
+	   getCurrPos(e);
+       onClick(currX, currY, true);
+       draw();
+    }
+});
+ 
+//-------------------
+// move up function
+//-------------------
+$("#canvas").mouseup(function(e) {
+    movingMouse = false;
+});
+ 
+ 
+//----------------------
+// leave canvas function
+//----------------------
+$("#canvas").mouseleave(function(e) {
+    movingMouse = false;
+});
+ 
+ 
+//--------------------
+// click function
+//--------------------
+function onClick(x, y, dragging) {
+    clickX.push(x);
+    clickY.push(y);
+    clickD.push(dragging);
+}
+ 
