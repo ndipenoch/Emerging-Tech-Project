@@ -148,3 +148,18 @@ async function loadModel() {
   }
    
  loadModel();
+ 
+ 
+//-----------------------------------------------
+// preprocess the canvas image
+//-----------------------------------------------
+function preprocessCanvas(image) {
+    // resize the input image to target size of (1, 28, 28)
+    let tensor = tf.browser.fromPixels(image)
+        .resizeNearestNeighbor([28, 28])
+        .mean(2)
+        .expandDims(2)
+        .expandDims()
+        .toFloat();
+    return tensor.div(255.0);
+}
