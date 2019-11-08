@@ -209,3 +209,22 @@ function loadChart(label, data, modelSelected) {
 
 	});
 }
+
+//----------------------------
+// display chart with updated
+// image from the canvas
+//----------------------------
+function displayChart(data) {
+	var select_model  = document.getElementById("select_model");
+  	var select_option = "CNN";
+
+	label = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+	if (firstTime == 0) {
+		loadChart(label, data, select_option);
+		firstTime = 1;
+	} else {
+		chart.destroy();
+		loadChart(label, data, select_option);
+	}
+	document.getElementById('chart_box').style.display = "block";
+}
