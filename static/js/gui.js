@@ -42,3 +42,13 @@ function getCurrPos(e) {
     currX = e.clientX - canvas.offsetLeft;
     currY = e.clientY - canvas.offsetTop;
 }
+
+//---------------------
+// Move down function
+//---------------------
+$("#canvas").mousedown(function(e) {
+    getCurrPos(e);
+    movingMouse = true;
+    onClick(currX, currY);
+    draw();
+});
