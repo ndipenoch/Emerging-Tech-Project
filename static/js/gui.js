@@ -21,3 +21,14 @@ var prevY = 0;
 var currY = 0;
 var canvasBox = document.getElementById('canvas_box');
 var canvas    = document.createElement("canvas");
+
+
+//---------------
+// Create canvas
+//---------------
+canvas.setAttribute("width", canvasWidth);
+canvas.setAttribute("height", canvasHeight);
+canvas.setAttribute("id", canvasId);
+canvas.style.backgroundColor = canvasBackgroundColor;
+canvasBox.appendChild(canvas);
+ctx = canvas.getContext("2d");
