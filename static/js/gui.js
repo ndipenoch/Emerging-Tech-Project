@@ -134,3 +134,17 @@ $("#clear-button").click(async function () {
     $(".prediction-text").empty();
     $("#result_box").addClass('d-none');
 });
+
+
+//-------------------------------------
+// read and load model from model file.
+//-------------------------------------
+async function loadModel() {
+    // clear the model variable
+    model = undefined; 
+    // load the model using a HTTPS request (where you have stored your model files)
+    model = await tf.loadLayersModel("static/models/model.json");
+    console.log("model loading 1..");
+  }
+   
+ loadModel();
