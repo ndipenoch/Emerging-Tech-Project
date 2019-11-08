@@ -183,3 +183,29 @@ $("#predict-button").click(async function () {
     displayLabel(results);
    //console.log(results);
 });
+
+
+//------------------------------
+// plot bar chart and display result
+//------------------------------
+var chart = "";
+var firstTime = 0;
+function loadChart(label, data, modelSelected) {
+	var ctx = document.getElementById('chart_box').getContext('2d');
+	chart = new Chart(ctx, {
+	    // The type of chart we want to create
+	    type: 'bar',
+
+	    // The data for our dataset
+	    data: {
+	        labels: label,
+	        datasets: [{
+	            label: modelSelected + " prediction",
+	            backgroundColor: '#f50057',
+	            borderColor: 'rgb(255, 99, 132)',
+	            data: data,
+	        }]
+	    },
+
+	});
+}
