@@ -32,3 +32,13 @@ canvas.setAttribute("id", canvasId);
 canvas.style.backgroundColor = canvasBackgroundColor;
 canvasBox.appendChild(canvas);
 ctx = canvas.getContext("2d");
+
+
+//Get the current position of the mouse X and Y coordinates relatively to the canvas
+//The window X and Y coordinates minus the canvas offset values.
+function getCurrPos(e) {
+    prevX = currX;
+    prevY = currY;
+    currX = e.clientX - canvas.offsetLeft;
+    currY = e.clientY - canvas.offsetTop;
+}
