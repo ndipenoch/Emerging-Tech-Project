@@ -163,3 +163,23 @@ function preprocessCanvas(image) {
         .toFloat();
     return tensor.div(255.0);
 }
+
+//--------------------------------------------
+// predict results
+//--------------------------------------------
+$("#predict-button").click(async function () {
+    // preprocess canvas
+    let tensor = preprocessCanvas(canvas);
+ 
+    // make predictions on the preprocessed image tensor
+    let predictions = await model.predict(tensor).data();
+ 
+    // get the model's prediction results
+    let results = Array.from(predictions);
+ 
+    // display the predictions in chart
+    $("#result_box").removeClass('d-none');
+    displayChart(results);
+    displayLabel(results);
+   //console.log(results);
+});
