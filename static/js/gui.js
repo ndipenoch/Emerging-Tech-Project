@@ -89,3 +89,35 @@ function onClick(x, y, dragging) {
     clickD.push(dragging);
 }
  
+//-------------------
+// draw function
+//-------------------
+function draw() {
+	
+	//clear everything in the canvas
+	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    
+	//Line colour
+	ctx.strokeStyle = canvasStrokeStyle;
+	//Join lines with rounded corners equal to the line width
+	ctx.lineJoin    = canvasLineJoin;
+	//line tickness
+	ctx.lineWidth   = canvasLineWidth;
+    
+	//start a new path.
+	for (var i = 0; i < clickX.length; i++) {
+		ctx.beginPath();
+		//If mouse is held down and moving(draging)
+		if(clickD[i] && i) {
+			ctx.moveTo(clickX[i-1], clickY[i-1]);
+		} else {
+			ctx.moveTo(clickX[i]-1, clickY[i]);
+		}
+		//connect the current sub-path
+        //to the last sub-path with a straight line
+		ctx.lineTo(clickX[i], clickY[i]);
+		//close the path.
+		ctx.closePath();
+		ctx.stroke();
+	}
+}
