@@ -211,8 +211,8 @@ function loadChart(label, data, modelSelected) {
 }
 
 //----------------------------
-// display chart with updated
-// image from the canvas
+// display chart with image data predicted from the model
+// gotten from updated image from the canvas.
 //----------------------------
 function displayChart(data) {
 	var select_model  = document.getElementById("select_model");
@@ -227,4 +227,20 @@ function displayChart(data) {
 		loadChart(label, data, select_option);
 	}
 	document.getElementById('chart_box').style.display = "block";
+}
+
+//----------------------------
+//Display result as a text format
+//----------------------------
+function displayLabel(data) {
+	var max = data[0];
+    var maxIndex = 0;
+
+    for (var i = 1; i < data.length; i++) {
+        if (data[i] > max) {
+            maxIndex = i;
+            max = data[i];
+        }
+    }
+	$(".prediction-text").html("Predicting you draw <b>"+maxIndex+"</b> with <b>"+Math.trunc( max*100 )+"%</b> confidence")
 }
