@@ -254,6 +254,7 @@ function displayLabel(data) {
 //-----------------------
 // TOUCH SCREEN EVENT LISTENNERS
 //-----------------------
+//Touch move function
 canvas.addEventListener("touchstart", function (e) {
     if (e.target == canvas) {
         e.preventDefault();
@@ -270,11 +271,18 @@ canvas.addEventListener("touchstart", function (e) {
  
 }, false);
 
-//--------------------
-// ADD CLICK function
-//--------------------
+
+//Touch click function
 function addUserGesture(x, y, dragging) {
     clickX.push(x);
     clickY.push(y);
     clickD.push(dragging);
 }
+
+//Touch end function
+canvas.addEventListener("touchend", function (e) {
+    if (e.target == canvas) {
+        e.preventDefault();
+    }
+    drawing = false;
+}, false);
