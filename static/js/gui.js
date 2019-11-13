@@ -286,3 +286,11 @@ canvas.addEventListener("touchend", function (e) {
     }
     drawing = false;
 }, false);
+
+//Touch leave function
+canvas.addEventListener("touchleave", function (e) {
+    if (e.target == canvas) {
+        e.preventDefault();
+    }
+    drawing = false;
+}, false);
