@@ -254,7 +254,7 @@ function displayLabel(data) {
 //-----------------------
 // TOUCH SCREEN EVENT LISTENNERS
 //-----------------------
-//Touch move function
+//Touch start function
 canvas.addEventListener("touchstart", function (e) {
     if (e.target == canvas) {
         e.preventDefault();
@@ -269,6 +269,22 @@ canvas.addEventListener("touchstart", function (e) {
     addUserGesture(currX, currY);
     draw();
  
+}, false);
+
+//Touch move function
+canvas.addEventListener("touchmove", function (e) {
+    if (e.target == canvas) {
+        e.preventDefault();
+    }
+    if(drawing) {
+        var rect = canvas.getBoundingClientRect();
+        var touch = e.touches[0];
+ 
+        getCurrPos(e);
+ 
+        addUserGesture(currX, currY, true);
+        drawOnCanvas();
+    }
 }, false);
 
 
