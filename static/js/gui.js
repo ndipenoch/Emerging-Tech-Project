@@ -14,7 +14,7 @@ var canvasId = "canvas";
 var clickX = new Array();
 var clickY = new Array();
 var clickD = new Array();
-var movingMouse;
+var moving;
 var currX = 0;
 var currY = 0;
 var canvasBox = document.getElementById('canvas_box');
@@ -29,13 +29,14 @@ canvas.setAttribute("height", canvasHeight);
 canvas.setAttribute("id", canvasId);
 canvas.style.backgroundColor = canvasBackgroundColor;
 canvasBox.appendChild(canvas);
-//Get the 2D content of the Canvas
-ctx = canvas.getContext("2d");
+
 //Check if the browser support the content
 if(typeof G_vmlCanvasManager != 'undefined') {
   canvas = G_vmlCanvasManager.initElement(canvas);
 }
 
+//Get the 2D content of the Canvas
+ctx = canvas.getContext("2d");
 
 //Get the current position of the mouse X and Y coordinates relatively to the canvas
 //The window X and Y coordinates minus the canvas offset values.
@@ -48,8 +49,9 @@ function getCurrPos(e) {
 // Move down function
 //---------------------
 $("#canvas").mousedown(function(e) {
+	var rect = canvas.getBoundingClientRect();
     getCurrPos(e);
-    movingMouse = true;
+    moving = true;
     onClick(currX, currY);
     draw();
 });
@@ -58,9 +60,9 @@ $("#canvas").mousedown(function(e) {
 // move function
 //---------------------
 $("#canvas").mousemove(function(e) {
-    if(movingMouse) {
-	   getCurrPos(e);
-       onClick(currX, currY, true);
+    if(moving) {
+	    getCurrPos(e);
+	   onClick(currX, currY, true);
        draw();
     }
 });
@@ -69,7 +71,7 @@ $("#canvas").mousemove(function(e) {
 // move up function
 //-------------------
 $("#canvas").mouseup(function(e) {
-    movingMouse = false;
+    moving = false;
 });
  
  
@@ -77,7 +79,7 @@ $("#canvas").mouseup(function(e) {
 // leave canvas function
 //----------------------
 $("#canvas").mouseleave(function(e) {
-    movingMouse = false;
+    moving = false;
 });
  
  
@@ -259,14 +261,15 @@ canvas.addEventListener("touchstart", function (e) {
     if (e.target == canvas) {
         e.preventDefault();
     }
- 
+
     var rect = canvas.getBoundingClientRect();
     var touch = e.touches[0];
  
-    getCurrPos(e);
+    var mouseX = touch.clientX - rect.left;
+    var mouseY = touch.clientY - rect.top;
  
-    drawing = true;
-    addUserGesture(currX, currY);
+    moving = true;
+	 addUserGesture(mouseX, mouseY);
     draw();
  
 }, false);
@@ -276,14 +279,16 @@ canvas.addEventListener("touchmove", function (e) {
     if (e.target == canvas) {
         e.preventDefault();
     }
-    if(drawing) {
-        var rect = canvas.getBoundingClientRect();
+    if(moving) {
+		
+		var rect = canvas.getBoundingClientRect();
         var touch = e.touches[0];
  
-        getCurrPos(e);
+        var mouseX = touch.clientX - rect.left;
+        var mouseY = touch.clientY - rect.top;
  
-        addUserGesture(currX, currY, true);
-        drawOnCanvas();
+		addUserGesture(mouseX, mouseY, true);
+        draw();
     }
 }, false);
 
@@ -300,7 +305,7 @@ canvas.addEventListener("touchend", function (e) {
     if (e.target == canvas) {
         e.preventDefault();
     }
-    drawing = false;
+    moving = false;
 }, false);
 
 //Touch leave function
@@ -308,5 +313,5 @@ canvas.addEventListener("touchleave", function (e) {
     if (e.target == canvas) {
         e.preventDefault();
     }
-    drawing = false;
+    moving = false;
 }, false);
