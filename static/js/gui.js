@@ -15,9 +15,7 @@ var clickX = new Array();
 var clickY = new Array();
 var clickD = new Array();
 var movingMouse;
-var prevX = 0;
 var currX = 0;
-var prevY = 0;
 var currY = 0;
 var canvasBox = document.getElementById('canvas_box');
 var canvas    = document.createElement("canvas");
@@ -31,14 +29,17 @@ canvas.setAttribute("height", canvasHeight);
 canvas.setAttribute("id", canvasId);
 canvas.style.backgroundColor = canvasBackgroundColor;
 canvasBox.appendChild(canvas);
+//Get the 2D content of the Canvas
 ctx = canvas.getContext("2d");
+//Check if the browser support the content
+if(typeof G_vmlCanvasManager != 'undefined') {
+  canvas = G_vmlCanvasManager.initElement(canvas);
+}
 
 
 //Get the current position of the mouse X and Y coordinates relatively to the canvas
 //The window X and Y coordinates minus the canvas offset values.
 function getCurrPos(e) {
-    prevX = currX;
-    prevY = currY;
     currX = e.clientX - canvas.offsetLeft;
     currY = e.clientY - canvas.offsetTop;
 }
@@ -125,14 +126,14 @@ function draw() {
 //------------------------
 // clear button function
 //------------------------
-$("#clear-button").click(async function () {
+$("#clearBtn").click(async function () {
 	//clear the canvas, result text and result box
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     clickX = new Array();
     clickY = new Array();
     clickD = new Array();
     $(".prediction-text").empty();
-    $("#result_box").addClass('d-none');
+    $("#resultBoX_ID").addClass('d-none');
 });
 
 
@@ -167,18 +168,22 @@ function preprocessCanvas(image) {
 //--------------------------------------------
 // predict results
 //--------------------------------------------
-$("#predict-button").click(async function () {
+//Call the server(Flask) once and store or cache the data from the model
+//on the browser and then use it from the browser.
+$("#predictBtn").click(async function () {
     // preprocess canvas
     let tensor = preprocessCanvas(canvas);
  
     // make predictions on the preprocessed image tensor
+	//Connect to the server once upon the first click and cache the data to ther browser
+	//From the second click serve from the cache data on the browser
     let predictions = await model.predict(tensor).data();
  
     // get the model's prediction results
     let results = Array.from(predictions);
  
     // display the predictions in chart
-    $("#result_box").removeClass('d-none');
+    $("#resultBoX_ID").removeClass('d-none');
     displayChart(results);
     displayLabel(results);
    //console.log(results);
@@ -191,7 +196,7 @@ $("#predict-button").click(async function () {
 var chart = "";
 var firstTime = 0;
 function loadChart(label, data, modelSelected) {
-	var ctx = document.getElementById('chart_box').getContext('2d');
+	var ctx = document.getElementById('chartBox_ID').getContext('2d');
 	chart = new Chart(ctx, {
 	    // The type of chart we want to create
 	    type: 'bar',
@@ -226,7 +231,7 @@ function displayChart(data) {
 		chart.destroy();
 		loadChart(label, data, select_option);
 	}
-	document.getElementById('chart_box').style.display = "block";
+	document.getElementById('chartBox_ID').style.display = "block";
 }
 
 //----------------------------
@@ -243,4 +248,33 @@ function displayLabel(data) {
         }
     }
 	$(".prediction-text").html("Predicting you draw <b>"+maxIndex+"</b> with <b>"+Math.trunc( max*100 )+"%</b> confidence")
+}
+
+
+//-----------------------
+// TOUCH SCREEN EVENT LISTENNERS
+//-----------------------
+canvas.addEventListener("touchstart", function (e) {
+    if (e.target == canvas) {
+        e.preventDefault();
+    }
+ 
+    var rect = canvas.getBoundingClientRect();
+    var touch = e.touches[0];
+ 
+    getCurrPos(e);
+ 
+    drawing = true;
+    addUserGesture(currX, currY);
+    draw();
+ 
+}, false);
+
+//--------------------
+// ADD CLICK function
+//--------------------
+function addUserGesture(x, y, dragging) {
+    clickX.push(x);
+    clickY.push(y);
+    clickD.push(dragging);
 }
