@@ -315,3 +315,4 @@ canvas.addEventListener("touchleave", function (e) {
     }
     moving = false;
 }, false);
+
