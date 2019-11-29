@@ -5,8 +5,8 @@
 # Overview
 This is a handwritten digit recognition application.
 The app is consist of a front end, back end and a server.
-The front and back end are linked by a server running on Flask.
-At the back end a model is train once using MNIST data set and store in a model file.
+The front and back ends are linked by a server running on Flask.
+At the back end a model is train once using MNIST data set and the trained model is stored in a file.
 At the front end users can draw any single digit from 0-9 using either a mouse or on a touch screen device. Users can process the input by pressing the predict button. The drawn image is taken, resize, sent to the trained model file which will compare the image and  predict the number.
 The predicted number is sent back and displayed on the bar chart in the front end.
 Once you start the application and click on the prediction button for the first time (it is a little bit longer) an async call is made to the model file and the data is cache on the web browser.
