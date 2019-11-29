@@ -34,6 +34,12 @@ Subsequent async calls upon the press of the predict button are faster as the dr
 * Internet
 * web browser
 
+# Training and Inference
+The two major parts in any AI appliction is training and inference.
+You can’t deploy a machine learning system until the model is trained, and training is done once.
+Inference is where the work actually gets done, it is where the value of machine learning is delivered.
+In this project I used Jupyter notebook and MNIST data set for training at the back end and inference occurs when users click on the predict button.
+
 # Research
 I done research and watched these videos:
 
