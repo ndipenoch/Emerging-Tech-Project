@@ -141,13 +141,15 @@ $("#clearBtn").click(async function () {
 
 //-------------------------------------
 // read and load model from model file.
+//Connect to the server once upon the first click and cache the data to ther browser
+//From the second click serve from the cache data on the browser
 //-------------------------------------
 async function loadModel() {
     // clear the model variable
     model = undefined; 
     // load the model using a HTTPS request (where you have stored your model files)
     model = await tf.loadLayersModel("static/models/model.json");
-    console.log("model loading 1..");
+    console.log("model loading ..");
   }
    
  loadModel();
