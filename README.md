@@ -34,6 +34,54 @@ Subsequent async calls upon the press of the predict button are faster as the dr
 * Internet
 * web browser
 
+# Design Techniques and Decisions
+* Tool
+  * Training is done at the back end which is written in Python on Jupyter notebook.
+* Download Dataset
+  * MNIST dataset is downloaded directly from from the internet using an API.
+The MNIST database contains 60,000 training images and 10,000 testing images taken from American Census Bureau employees and American high school students.
+So,the dataset is split up into two groups training and test datasets of 28X28 pixels grayscale.
+* Reshaping and Normalizing the Images
+  * To use the dataset in Keras API, we need 4 dimension numpy arrays. 
+From the data we get a 3 dimension array (60000, 28, 28), where 60000 is the dataset with a grayscale of 28X28 pixels.
+So, I changed it to a 4 dimenstional array like so train_img.reshape([-1, 28, 28, 1]).
+I also need to normalize the data as required in neural network models and I did this by dividing the RGB codes to 255 (which is the maximum RGB code minus the minimum RGB code).
+Each pixel has a single pixel-value(RGB codes, between 0-255) associated with it,
+indicating the lightness or darkness of that pixel, the higher the number the darker the pixel.
+* Building the Convolutional Neural Network
+  * I created the model in Keras using the sequential API.
+I used the following layers Conv2D, MaxPool2D, Flatten, Dense and Dropout.
+     * Conv2D :
+        This process is the main process for CNN. 
+In this operation there is a feature detector or filter. 
+This filter detects edges or specific shapes. 
+Filter is placed at the top left of the image and it is multiplied with value on same indices. 
+After that all the results are summed and this result is written to an output matrix. 
+Then the filter slips to right to do this whole processes again and again.
+I use the 2D pattern.
+      * MaxPool2D : This layer is used for reducing parameters and computating process. 
+Also I use this layer invariant features for scaling and for orientation changes that are detected to prevent overfitting. 
+There are some pooling process like average pooling, max pooling etc but I used max pooling.
+      * Flatten : Basically flattening is taking a matrix coming from convolutional and pooling processes and turning it into one dimensional array.
+This is important because input of fully-connected layer or let’s say Artificial Neural Networks consist of one dimensional array.
+      * Dense : Dense layers are used when an association exist between any feature and any other feature at a data point. 
+Since between two layers of size n1 and n2, there can be n1*n2 connections.
+      * Dropout : Dropout is a regularization technique for reducing overfitting.
+It is also a way of cutting too much association among features by dropping the weights (edges) at a probability.
+It is called “dropout” because it drops out visible or hidden units in neural network.
+ * Compiling and Fitting the Model
+    * I used ‘Adam Optimizer’ as an optimizer with a given loss function that uses a metric.
+The Epoch number is set at 10 which might seem a bit small. 
+However, I got 0.9868 accuracy. 
+I saved the trained model as a tensor flow js file.
+ * Asynchronous Call
+    * An async await call is made in the javascript, and the the data is cached and store on the web browser for the first call.
+The user is then serve from the browser from the second and subsequent calls.
+ * Drawing on the Canvas
+     * Drawing on the canvas is done by joining several lines with rounded corners together.
+  * Display
+     * The predicted results is displayed in a form of a bar chart which is more elegant.
+
 # Training and Inference
 The two major parts in any AI appliction is training and inference.
 You can’t deploy a machine learning system until the model is trained, and training is done once.
